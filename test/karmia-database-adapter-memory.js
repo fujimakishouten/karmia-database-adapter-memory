@@ -783,9 +783,7 @@ describe('karmia-database-adapter-memory', function () {
         });
 
         after(function (done) {
-            Object.keys(database.tables).forEach(function (key) {
-                database.tables[key].model = [];
-            });
+            database.sequence = {};
 
             done();
         });
