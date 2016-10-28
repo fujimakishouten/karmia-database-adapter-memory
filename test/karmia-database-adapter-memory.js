@@ -27,7 +27,7 @@ describe('karmia-database-adapter-memory', function () {
             const database = adapter(options);
             database.connect().then(function () {
                 const connection = database.getConnection();
-                expect(connection.constructor.name).to.be('Object');
+                expect(connection.constructor.name).to.be('KarmiaDatabaseAdapterMemory');
 
                 done();
             });
@@ -40,7 +40,7 @@ describe('karmia-database-adapter-memory', function () {
                 const database = adapter(options);
                 database.connect().then(function () {
                     const connection = database.getConnection();
-                    expect(connection.constructor.name).to.be('Object');
+                    expect(connection.constructor.name).to.be('KarmiaDatabaseAdapterMemory');
 
                     done();
                 }).catch(function (error) {
@@ -56,7 +56,7 @@ describe('karmia-database-adapter-memory', function () {
                     }
 
                     const connection = database.getConnection();
-                    expect(connection.constructor.name).to.be('Object');
+                    expect(connection.constructor.name).to.be('KarmiaDatabaseAdapterMemory');
 
                     done();
                 });
