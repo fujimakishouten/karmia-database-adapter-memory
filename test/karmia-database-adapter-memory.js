@@ -672,7 +672,9 @@ describe('karmia-database-adapter-memory', function () {
 
         after(function (done) {
             Object.keys(database.tables).forEach(function (key) {
-                database.tables[key].model = [];
+                database.tables[key].index = 0;
+                database.tables[key].map = {};
+                database.tables[key].buffer = [];
             });
 
             done();
@@ -800,6 +802,7 @@ describe('karmia-database-adapter-memory', function () {
             done();
         });
     });
+
 
     describe('suite', function () {
         const database = adapter(options),
@@ -1088,7 +1091,9 @@ describe('karmia-database-adapter-memory', function () {
 
         after(function (done) {
             Object.keys(database.tables).forEach(function (key) {
-                database.tables[key].model = [];
+                 database.tables[key].index = 0;
+                 database.tables[key].map = {};
+                 database.tables[key].buffer = [];
             });
 
             done();
