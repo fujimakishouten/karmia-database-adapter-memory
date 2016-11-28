@@ -340,6 +340,34 @@ describe('karmia-database-adapter-memory', function () {
                         done();
                     });
                 });
+
+                it('Projection specified', function (done) {
+                    const table = database.table(key),
+                        conditions = {user_id: 1},
+                        projection = {
+                            user_id: true,
+                            email: true,
+                            name: true
+                        };
+                    table.get(conditions, projection).then(function (result) {
+                        const data = fixture[0];
+
+                        expect(result['user_id']).to.be(data['user_id']);
+                        expect(result['email']).to.be(data['email']);
+                        expect(result['name']).to.be(data['name']);
+                        expect(result['birthday']).to.be(undefined);
+                        expect(result['blood_type']).to.be(undefined);
+                        expect(result['size']).to.eql(undefined);
+                        expect(result['favorite_food']).to.be(undefined);
+                        expect(result['dislikes_food']).to.be(undefined);
+                        expect(result['color']).to.be(undefined);
+                        expect(result['unit']).to.be(undefined);
+
+                        done();
+                    }).catch(function (error) {
+                        done(error);
+                    });
+                });
             });
 
             describe('Should not get item', function () {
@@ -416,6 +444,32 @@ describe('karmia-database-adapter-memory', function () {
                         done();
                     });
                 });
+
+                it('Projection specified', function (done) {
+                    const table = database.table(key),
+                        projection = {
+                            user_id: true,
+                            email: true,
+                            name: true
+                        };
+
+                    table.find({}, projection).then(function (result) {
+                        fixture.forEach(function (data, index) {
+                            expect(result[index]['user_id']).to.be(data['user_id']);
+                            expect(result[index]['email']).to.be(data['email']);
+                            expect(result[index]['name']).to.be(data['name']);
+                            expect(result[index]['birthday']).to.be(undefined);
+                            expect(result[index]['blood_type']).to.be(undefined);
+                            expect(result[index]['size']).to.eql(undefined);
+                            expect(result[index]['favorite_food']).to.be(undefined);
+                            expect(result[index]['dislikes_food']).to.be(undefined);
+                            expect(result[index]['color']).to.be(undefined);
+                            expect(result[index]['unit']).to.be(undefined);
+                        });
+
+                        done();
+                    });
+                });
             });
 
             describe('Should find items', function () {
@@ -469,6 +523,37 @@ describe('karmia-database-adapter-memory', function () {
                             expect(data['dislikes_food']).to.be(result[index]['dislikes_food']);
                             expect(data['color']).to.be(result[index]['color']);
                             expect(data['unit']).to.be(result[index]['unit']);
+                        });
+
+                        done();
+                    });
+                });
+
+                it('Projection specified', function (done) {
+                    const table = database.table(key),
+                        conditions = {
+                            user_id: {
+                                $in: [1, 2, 3]
+                            }
+                        },
+                        projection = {
+                            user_id: true,
+                            email: true,
+                            name: true
+                        };
+
+                    table.find(conditions, projection).then(function (result) {
+                        fixture.slice(0, 3).forEach(function (data, index) {
+                            expect(result[index]['user_id']).to.be(data['user_id']);
+                            expect(result[index]['email']).to.be(data['email']);
+                            expect(result[index]['name']).to.be(data['name']);
+                            expect(result[index]['birthday']).to.be(undefined);
+                            expect(result[index]['blood_type']).to.be(undefined);
+                            expect(result[index]['size']).to.eql(undefined);
+                            expect(result[index]['favorite_food']).to.be(undefined);
+                            expect(result[index]['dislikes_food']).to.be(undefined);
+                            expect(result[index]['color']).to.be(undefined);
+                            expect(result[index]['unit']).to.be(undefined);
                         });
 
                         done();
@@ -1032,7 +1117,7 @@ describe('karmia-database-adapter-memory', function () {
                             expect(updated[key]).to.be(result[key]);
                         });
 
-                        return suite.get({user_id: data.user_id});
+                        return suite.get();
                     }).then(function (result) {
                         Object.keys(updated).forEach(function (key) {
                             expect(updated[key]).to.be(result[key]);

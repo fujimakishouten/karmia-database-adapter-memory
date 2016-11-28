@@ -1,6 +1,6 @@
 {
     "name": "karmia-database-adapter-memory",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "description": "In-memory test database adapter for Karmia Database",
     "homepage": "https://github.com/fujimakishouten/karmia-database-adapter-memory",
     "license": "MIT",
